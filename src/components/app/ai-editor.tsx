@@ -26,9 +26,15 @@ export function AiEditor({ initialSourceCode, onSourceCodeUpdate }: AiEditorProp
     },
     onResponse: (response) => {
       if (!response.ok) {
-        console.error('API Error:', response);
         setIsThinking(false);
-        // You might want to add an error message to the chat here
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: String(Date.now()),
+            role: 'assistant',
+            content: "Sorry, an API error occurred. Please try again.",
+          },
+        ]);
       }
     },
     onFinish: (message) => {
