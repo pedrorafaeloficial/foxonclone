@@ -25,7 +25,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+    <Button type="submit" disabled={pending} size="lg" className="w-full sm:w-auto">
       {pending ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -56,26 +56,28 @@ export default function Home() {
   }, [state.error, toast]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <AppHeader />
-      <main className="flex-grow container mx-auto px-4 py-8 sm:py-12 md:py-16">
-        <div className="max-w-3xl mx-auto">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="font-headline text-3xl text-center">FoxOn Clone</CardTitle>
-              <CardDescription className="text-center pt-2">
-                Enter any website URL to fetch its HTML, CSS, and JavaScript source code.
+      <main className="flex-grow container mx-auto px-4 py-8 sm:py-12 md:py-16 flex items-center justify-center">
+        <div className="w-full max-w-4xl">
+          <Card className="shadow-2xl rounded-2xl border-2 border-primary/10">
+            <CardHeader className="text-center p-8">
+              <CardTitle className="font-headline text-4xl md:text-5xl font-bold tracking-tight">
+                FoxOn Clone
+              </CardTitle>
+              <CardDescription className="pt-2 text-lg text-muted-foreground max-w-xl mx-auto">
+                Enter any website URL to instantly get its complete HTML, CSS, and JavaScript source code.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-8 pt-0">
               <form action={formAction} className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2 space-y-2 sm:space-y-0">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 space-y-4 sm:space-y-0">
                   <Input
                     name="url"
                     type="url"
                     placeholder="https://example.com"
                     required
-                    className="flex-grow"
+                    className="flex-grow text-base h-12"
                     aria-label="Website URL"
                   />
                   <SubmitButton />
@@ -85,13 +87,13 @@ export default function Home() {
           </Card>
 
           {state.source && (
-            <div className="mt-8">
+            <div className="mt-12">
               <SourceCodeViewer source={state.source} />
             </div>
           )}
         </div>
       </main>
-      <footer className="py-4 text-center text-sm text-muted-foreground">
+      <footer className="py-6 text-center text-sm text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} FoxOn Clone. All rights reserved.</p>
       </footer>
     </div>

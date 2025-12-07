@@ -40,11 +40,11 @@ function CodeActions({ content, filename }: { content: string; filename: string 
   };
 
   return (
-    <div className="absolute top-2 right-2 flex items-center gap-2">
-      <Button variant="ghost" size="icon" onClick={handleCopy} aria-label={`Copy ${filename}`}>
+    <div className="absolute top-3 right-3 flex items-center gap-1">
+      <Button variant="ghost" size="icon" onClick={handleCopy} aria-label={`Copy ${filename}`} className="h-8 w-8 text-white/70 hover:text-white hover:bg-white/10">
         <Copy className="h-4 w-4" />
       </Button>
-      <Button variant="ghost" size="icon" onClick={handleDownload} aria-label={`Download ${filename}`}>
+      <Button variant="ghost" size="icon" onClick={handleDownload} aria-label={`Download ${filename}`} className="h-8 w-8 text-white/70 hover:text-white hover:bg-white/10">
         <Download className="h-4 w-4" />
       </Button>
     </div>
@@ -53,7 +53,7 @@ function CodeActions({ content, filename }: { content: string; filename: string 
 
 function CodeBlock({ code, language, filename }: { code: string; language: string; filename: string }) {
   return (
-    <div className="relative rounded-md bg-zinc-900 text-white my-2">
+    <div className="relative rounded-lg bg-zinc-900 text-white my-2 border border-zinc-700">
        <CodeActions content={code} filename={filename} />
       <pre className="font-code text-sm p-4 pt-12 overflow-x-auto">
         <code className={`language-${language}`}>{code}</code>
@@ -71,16 +71,16 @@ function FileList({ files, type }: { files: SourceFile[], type: 'CSS' | 'JavaScr
         <Accordion type="single" collapsible className="w-full">
             {files.map((file) => (
                 <AccordionItem value={file.url} key={file.url}>
-                    <AccordionTrigger className="text-sm">
-                        <div className="flex items-center gap-2">
-                            {type === 'CSS' ? <FileText className="h-4 w-4 text-accent" /> : <FileCode className="h-4 w-4 text-accent" />}
+                    <AccordionTrigger className="text-base font-medium py-4 rounded-lg px-4 hover:bg-secondary/50">
+                        <div className="flex items-center gap-3">
+                            {type === 'CSS' ? <FileText className="h-5 w-5 text-accent" /> : <FileCode className="h-5 w-5 text-accent" />}
                             <span>{file.name}</span>
                         </div>
                     </AccordionTrigger>
-                    <AccordionContent>
-                        <div className="flex items-center justify-between text-xs text-muted-foreground mb-2 px-1">
-                            <span>Source URL:</span>
-                             <a href={file.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-accent transition-colors">
+                    <AccordionContent className="px-2">
+                        <div className="flex items-center justify-between text-xs text-muted-foreground mb-2 px-2">
+                            <span className="font-medium">Source URL:</span>
+                             <a href={file.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-primary transition-colors">
                                 {file.url}
                                 <ExternalLink className="h-3 w-3" />
                             </a>
@@ -95,31 +95,31 @@ function FileList({ files, type }: { files: SourceFile[], type: 'CSS' | 'JavaScr
 
 export function SourceCodeViewer({ source }: SourceCodeViewerProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="font-headline text-2xl">Source Code</CardTitle>
+    <Card className="shadow-xl rounded-2xl">
+      <CardHeader className="p-6">
+        <CardTitle className="font-headline text-3xl">Source Code</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6 pt-0">
         <Tabs defaultValue="html">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="html">
-                <FileCode className="mr-2 h-4 w-4" /> HTML
+          <TabsList className="grid w-full grid-cols-3 bg-secondary/50">
+            <TabsTrigger value="html" className="text-base">
+                <FileCode className="mr-2 h-5 w-5" /> HTML
             </TabsTrigger>
-            <TabsTrigger value="css">
-                <FileText className="mr-2 h-4 w-4" /> CSS ({source.css.length})
+            <TabsTrigger value="css" className="text-base">
+                <FileText className="mr-2 h-5 w-5" /> CSS ({source.css.length})
             </TabsTrigger>
-            <TabsTrigger value="javascript">
-                <FileCode className="mr-2 h-4 w-4" /> JavaScript ({source.js.length})
+            <TabsTrigger value="javascript" className="text-base">
+                <FileCode className="mr-2 h-5 w-5" /> JavaScript ({source.js.length})
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="html" className="mt-4">
+          <TabsContent value="html" className="mt-6">
             <CodeBlock code={source.html} language="html" filename="index.html" />
           </TabsContent>
-          <TabsContent value="css" className="mt-4">
+          <TabsContent value="css" className="mt-6">
             <FileList files={source.css} type="CSS" />
           </TabsContent>
-          <TabsContent value="javascript" className="mt-4">
+          <TabsContent value="javascript" className="mt-6">
             <FileList files={source.js} type="JavaScript" />
           </TabsContent>
         </Tabs>
