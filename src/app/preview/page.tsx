@@ -8,9 +8,8 @@ import { SourceCodeViewer } from '@/components/app/source-code-viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Smartphone, Monitor, Code, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, Smartphone, Monitor, Code, Loader2 } from 'lucide-react';
 import { FoxOnLogo } from '@/components/icons';
-import { AiEditor } from '@/components/app/ai-editor';
 
 const PreviewLoading = () => (
   <div className="flex flex-col items-center justify-center h-full text-center p-8">
@@ -43,11 +42,6 @@ export default function PreviewPage() {
         setTimeout(() => setLoading(false), 500);
     }
   }, [router]);
-
-  const handleSourceUpdate = (newSource: SourceCode) => {
-    setSource(newSource);
-    sessionStorage.setItem('siteSource', JSON.stringify(newSource));
-  };
   
   const iframeContent = useMemo(() => {
     if (!source) return '';
@@ -117,7 +111,7 @@ export default function PreviewPage() {
         </div>
 
         <Tabs defaultValue="desktop" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-secondary/50 h-12">
+          <TabsList className="grid w-full grid-cols-3 bg-secondary/50 h-12">
             <TabsTrigger value="desktop" className="text-base h-full">
               <Monitor className="mr-2 h-5 w-5" /> Desktop
             </TabsTrigger>
@@ -126,9 +120,6 @@ export default function PreviewPage() {
             </TabsTrigger>
             <TabsTrigger value="code" className="text-base h-full">
               <Code className="mr-2 h-5 w-5" /> Código Fonte
-            </TabsTrigger>
-             <TabsTrigger value="ai-editor" className="text-base h-full font-bold text-primary">
-              <Sparkles className="mr-2 h-5 w-5" /> AI Editor
             </TabsTrigger>
           </TabsList>
           
@@ -168,12 +159,6 @@ export default function PreviewPage() {
             <SourceCodeViewer source={source} />
           </TabsContent>
 
-          <TabsContent value="ai-editor" className="mt-6">
-            <AiEditor
-              initialSourceCode={source}
-              onSourceCodeUpdate={handleSourceUpdate}
-            />
-          </TabsContent>
         </Tabs>
       </main>
        <footer className="py-6 text-center text-sm text-muted-foreground">
