@@ -3,7 +3,7 @@ import { Megaphone } from 'lucide-react';
 export function AnnouncementBanner() {
   return (
     <a 
-      href="https://pay.hotmart.com/E93335198M?off=l50n2vqq" 
+      href="https://wa.me/5511972202587?text=Ola%20Pedro%2C%20quero%20aprender%20a%20Vender%20Sites%2C%20pode%20me%20ajudar%3F" 
       target="_blank" 
       rel="noopener noreferrer"
       className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
