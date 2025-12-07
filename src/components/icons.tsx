@@ -8,5 +8,6 @@ export const FoxOnLogo = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     width={64}
     height={64}
     {...props}
+    unoptimized
   />
 );
