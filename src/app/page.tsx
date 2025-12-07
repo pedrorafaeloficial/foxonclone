@@ -13,6 +13,7 @@ import { SourceCodeViewer } from '@/components/app/source-code-viewer';
 import { Loader2, Rocket } from 'lucide-react';
 import type { SourceCode } from '@/app/actions';
 import { Icons } from '@/components/icons';
+import { AnnouncementBanner } from '@/components/app/announcement-banner';
 
 interface FormState {
   source?: SourceCode;
@@ -59,6 +60,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <AppHeader />
+      <AnnouncementBanner />
       <main className="flex-grow container mx-auto px-4 py-8 sm:py-12 md:py-16 flex items-center justify-center">
         <div className="w-full max-w-4xl">
           <Card className="shadow-2xl rounded-2xl border-2 border-primary/10">
