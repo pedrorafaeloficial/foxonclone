@@ -62,7 +62,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto">
           <Card className="shadow-lg">
             <CardHeader>
-              <CardTitle className="font-headline text-3xl text-center">Website Source Code Cloner</CardTitle>
+              <CardTitle className="font-headline text-3xl text-center">FoxOn Clone</CardTitle>
               <CardDescription className="text-center pt-2">
                 Enter any website URL to fetch its HTML, CSS, and JavaScript source code.
               </CardDescription>
@@ -92,7 +92,7 @@ export default function Home() {
         </div>
       </main>
       <footer className="py-4 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} SourceClone. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} FoxOn Clone. All rights reserved.</p>
       </footer>
     </div>
   );

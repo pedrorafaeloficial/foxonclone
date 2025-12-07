@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'SourceClone',
+  title: 'FoxOn Clone',
   description: 'Clone any website and get its source code',
 };
 
