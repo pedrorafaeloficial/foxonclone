@@ -2,10 +2,14 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
+import { FoxOnLogo } from '@/components/icons';
 
 export const metadata: Metadata = {
   title: 'FoxOn Clone',
   description: 'Clone any website and get its source code',
+  icons: {
+    icon: 'https://agenciafoxon.com.br/wp-content/uploads/2023/11/cropped-Ativo-1-1.png',
+  },
 };
 
 export default function RootLayout({
