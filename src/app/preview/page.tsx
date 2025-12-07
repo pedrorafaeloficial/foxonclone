@@ -8,8 +8,9 @@ import { SourceCodeViewer } from '@/components/app/source-code-viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Smartphone, Monitor, Code, Loader2 } from 'lucide-react';
+import { ArrowLeft, Smartphone, Monitor, Code, Loader2, Sparkles } from 'lucide-react';
 import { FoxOnLogo } from '@/components/icons';
+import { AiEditor } from '@/components/app/ai-editor';
 
 const PreviewLoading = () => (
   <div className="flex flex-col items-center justify-center h-full text-center p-8">
@@ -43,30 +44,43 @@ export default function PreviewPage() {
     }
   }, [router]);
 
+  const handleSourceUpdate = (newSource: SourceCode) => {
+    setSource(newSource);
+    sessionStorage.setItem('siteSource', JSON.stringify(newSource));
+  };
+  
   const iframeContent = useMemo(() => {
     if (!source) return '';
-    const cssLinks = source.css.map(file => `<link rel="stylesheet" href="${file.url}">`).join('\n');
+    // Use data URIs for CSS content
+    const cssLinks = source.css.map(file => {
+      const blob = new Blob([file.content], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+      return `<link rel="stylesheet" href="${url}">`;
+    }).join('\n');
+  
+    // For JS, we still need to consider external fetches if they use relative paths
+    // But for simplicity in this component, let's try embedding as well.
     const jsScripts = source.js.map(file => `<script src="${file.url}"></script>`).join('\n');
     const baseTag = `<base href="${new URL(source.css[0]?.url || source.js[0]?.url || 'https://example.com').origin}">`;
     
-    // Replace original asset paths with absolute URLs
     let processedHtml = source.html;
-    
-    // Process CSS
+
+    // The logic to replace paths might be overly complex if assets are fetched relative to CSS files.
+    // For a more robust preview, we rely on the <base> tag and absolute URLs fetched initially.
+    // Let's simplify the replacement logic and rely more on the initial absolute URLs.
     source.css.forEach(file => {
-      processedHtml = processedHtml.replace(new RegExp(`(href=["'])([^"']*/${file.name.split('?')[0]})`, 'g'), `$1${file.url}`);
+      processedHtml = processedHtml.replace(new RegExp(`(href=["'])([^"']*/${file.name.split('?')[0]}[^"']*)`, 'g'), `$1${file.url}`);
     });
     
-    // Process JS
     source.js.forEach(file => {
-      processedHtml = processedHtml.replace(new RegExp(`(src=["'])([^"']*/${file.name.split('?')[0]})`, 'g'), `$1${file.url}`);
+      processedHtml = processedHtml.replace(new RegExp(`(src=["'])([^"']*/${file.name.split('?')[0]}[^"']*)`, 'g'), `$1${file.url}`);
     });
 
     return `
       <html>
         <head>
           ${baseTag}
-          ${cssLinks}
+          <style>${source.css.map(f => f.content).join('\n\n')}</style>
         </head>
         <body>
           ${processedHtml}
@@ -103,7 +117,7 @@ export default function PreviewPage() {
         </div>
 
         <Tabs defaultValue="desktop" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-secondary/50 h-12">
+          <TabsList className="grid w-full grid-cols-4 bg-secondary/50 h-12">
             <TabsTrigger value="desktop" className="text-base h-full">
               <Monitor className="mr-2 h-5 w-5" /> Desktop
             </TabsTrigger>
@@ -112,6 +126,9 @@ export default function PreviewPage() {
             </TabsTrigger>
             <TabsTrigger value="code" className="text-base h-full">
               <Code className="mr-2 h-5 w-5" /> Código Fonte
+            </TabsTrigger>
+             <TabsTrigger value="ai-editor" className="text-base h-full font-bold text-primary">
+              <Sparkles className="mr-2 h-5 w-5" /> AI Editor
             </TabsTrigger>
           </TabsList>
           
@@ -149,6 +166,13 @@ export default function PreviewPage() {
 
           <TabsContent value="code" className="mt-6">
             <SourceCodeViewer source={source} />
+          </TabsContent>
+
+          <TabsContent value="ai-editor" className="mt-6">
+            <AiEditor
+              initialSourceCode={source}
+              onSourceCodeUpdate={handleSourceUpdate}
+            />
           </TabsContent>
         </Tabs>
       </main>
