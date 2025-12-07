@@ -12,6 +12,7 @@ import { AppHeader } from '@/components/app/header';
 import { SourceCodeViewer } from '@/components/app/source-code-viewer';
 import { Loader2, Rocket } from 'lucide-react';
 import type { SourceCode } from '@/app/actions';
+import { Icons } from '@/components/icons';
 
 interface FormState {
   source?: SourceCode;
@@ -94,7 +95,10 @@ export default function Home() {
         </div>
       </main>
       <footer className="py-6 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} FoxOn Clone. All rights reserved.</p>
+        <div className="flex items-center justify-center gap-2">
+          <Icons.logo className="h-6 w-6" />
+          <p>&copy; {new Date().getFullYear()} FoxOn Clone. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
