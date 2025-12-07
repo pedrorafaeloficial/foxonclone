@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'FoxOn Clone',
   description: 'Clone any website and get its source code',
   icons: {
-    icon: 'https://agenciafoxon.com.br/wp-content/uploads/2024/02/logo-foxon-group-novo.png',
+    icon: 'https://agenciafoxon.com.br/wp-content/uploads/2025/11/Ativo-1-1.png',
   },
 };
 
